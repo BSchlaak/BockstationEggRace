@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "pVtWYfznZpF+Cz33bSHddA+jTwx5gxN/+RkEZSA2NSXCj7QWfjzpp2zitqRvq/PgcOpySdAQEU0IOhX9WJ7sBw==",
+  "success": true,
+  "projectFilePath": "C:\\Source\\Repos\\GitHub\\BSchlaak\\BockstationEggRace\\Bockstation.EggRace\\UI\\Bockstation.EggRace.UI.Console\\Bockstation.EggRace.UI.Console.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bjoer\\.nuget\\packages\\csvhelper\\27.1.0\\csvhelper.27.1.0.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\ini-parser-netstandard\\2.5.2\\ini-parser-netstandard.2.5.2.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\3.1.13\\microsoft.extensions.configuration.abstractions.3.1.13.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.13\\microsoft.extensions.primitives.3.1.13.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\mqttnet\\3.0.15\\mqttnet.3.0.15.nupkg.sha512",
+    "C:\\Users\\bjoer\\.nuget\\packages\\mqttnet.extensions.managedclient\\3.0.15\\mqttnet.extensions.managedclient.3.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}

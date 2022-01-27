@@ -1,0 +1,60 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Bockstation.EggRace.Core.Mqtt/0.1.0": {
+        "dependencies": {
+          "MQTTnet": "3.0.15",
+          "MQTTnet.Extensions.ManagedClient": "3.0.15"
+        },
+        "runtime": {
+          "Bockstation.EggRace.Core.Mqtt.dll": {}
+        }
+      },
+      "MQTTnet/3.0.15": {
+        "runtime": {
+          "lib/netcoreapp3.1/MQTTnet.dll": {
+            "assemblyVersion": "3.0.15.0",
+            "fileVersion": "3.0.15.0"
+          }
+        }
+      },
+      "MQTTnet.Extensions.ManagedClient/3.0.15": {
+        "dependencies": {
+          "MQTTnet": "3.0.15"
+        },
+        "runtime": {
+          "lib/netstandard2.1/MQTTnet.Extensions.ManagedClient.dll": {
+            "assemblyVersion": "3.0.15.0",
+            "fileVersion": "3.0.15.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Bockstation.EggRace.Core.Mqtt/0.1.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MQTTnet/3.0.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-It8ZtqJdFXQNQabV1ZaOgtlWyk922/uFLChq2EgIDypd5zUIE8z72O10k0gYM4Zq9LLYl34Ex0kcu0uxu+PA+g==",
+      "path": "mqttnet/3.0.15",
+      "hashPath": "mqttnet.3.0.15.nupkg.sha512"
+    },
+    "MQTTnet.Extensions.ManagedClient/3.0.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QySgOyruOc+oLedf2bQ91VXPdNuXNcGR+jJ1WKNC72/TdVxE/8NnXxEFPHTUJTkvjOqSVde41d4nEVikbZU/nA==",
+      "path": "mqttnet.extensions.managedclient/3.0.15",
+      "hashPath": "mqttnet.extensions.managedclient.3.0.15.nupkg.sha512"
+    }
+  }
+}

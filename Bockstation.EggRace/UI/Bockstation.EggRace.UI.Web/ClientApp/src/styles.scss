@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background-color: yellow;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  
+  > .container-fluid {
+    padding-top: 80px !important;
+  }
+}
+
+.mat-toolbar {
+  .ng-fa-icon {
+    margin-right: 1em;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .mat-mini-fab {
+    margin-left: 2em;
+
+    .ng-fa-icon {
+      margin: auto;
+    }
+  }
+}
