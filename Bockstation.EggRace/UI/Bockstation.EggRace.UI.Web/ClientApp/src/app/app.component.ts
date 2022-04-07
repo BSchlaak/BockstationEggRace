@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { faEgg, faListOl, faSlidersH, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faEgg, faHome, faListOl, faSlidersH, faTools, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { ResultService, TeamService } from './_services';
 import * as fileSaver from 'file-saver';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +13,11 @@ import { SettingsDialog } from './_components/settings.dialog';
 export class AppComponent {
   //#region Public fields
   public faEgg = faEgg;
+  public faHome = faHome;
   public faListOl = faListOl;
   public faSlidersH = faSlidersH;
+  public faTools = faTools;
+  public faUser = faUser;
   public faUsers = faUsers;
   public title = 'Das rollende Osterei';
   public isAdmin = false;

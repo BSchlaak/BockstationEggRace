@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { Result, Team } from '../_interfaces';
 
@@ -23,6 +23,7 @@ export class AdminComponent
 
   //#region Public fields
   public faPlay = faPlay;
+  public faRedoAlt = faRedoAlt;
 
   public displayedColumns: string[] = ['start', 'end', 'teamName', 'personName'];
   public teams: Team[] = [];
@@ -93,6 +94,14 @@ export class AdminComponent
 
   startRace(result: Result): void {
     this._resultService.start(result);
+  }
+
+  resetRace(result: Result): void {
+    result.splitTime1 = undefined;
+    result.splitTime2 = undefined;
+    result.totalTime = undefined;
+
+    this.startRace(result);
   }
   //#endregion Methods
 }

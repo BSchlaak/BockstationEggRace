@@ -7,7 +7,7 @@ namespace Bockstation.EggRace.UI.Console
     {
         static void Main(string[] args)
         {
-            var connector = new Core.Mqtt.Connector("raspberrypi.local");
+            var connector = new Core.Mqtt.Connector("raspberrypi.local", "/eggRace/measurement", "/eggRace/results");
             connector.MessageReceived += MessageReceived;
 
             Task.Run(async () => await connector.ConnectAsync());
@@ -16,41 +16,31 @@ namespace Bockstation.EggRace.UI.Console
             while (true) { }
         }
 
-        private static void MessageReceived(object sender, Tuple<long, long, long, long> e)
+        private static void MessageReceived(object sender, Tuple<long, long> e)
         {
             System.Console.WriteLine($"Message received: {e}");
 
-            if (e.Item1 > 0)
+            switch (e.Item1)
             {
-                var startTime = ParseTimeSpan(e.Item1);
-
-                if (e.Item2 == 0)
-                {
+                case 0:
+                    var startTime = ParseTimeSpan(e.Item2);
                     System.Console.WriteLine($"Started at: {startTime}");
-                }
-                else
-                {
+                    break;
+
+                case 1:
                     var intermediateTime1 = ParseTimeSpan(e.Item2);
+                    System.Console.WriteLine($"First intermediate time at: {intermediateTime1}");
+                    break;
 
-                    if (e.Item3 == 0)
-                    {
-                        System.Console.WriteLine($"First intermediate time at: {intermediateTime1} (after {intermediateTime1 - startTime})");
-                    }
-                    else
-                    {
-                        var intermediateTime2 = ParseTimeSpan(e.Item3);
+                case 2:
+                    var intermediateTime2 = ParseTimeSpan(e.Item2);
+                    System.Console.WriteLine($"Second intermediate time at: {intermediateTime2}");
+                    break;
 
-                        if (e.Item4 == 0)
-                        {
-                            System.Console.WriteLine($"Second intermediate time at: {intermediateTime2} (after {intermediateTime2 - startTime})");
-                        }
-                        else
-                        {
-                            var finishTime = ParseTimeSpan(e.Item4);
-                            System.Console.WriteLine($"Finished at: {finishTime} (after {finishTime - startTime})");
-                        }
-                    }
-                }
+                case 3:
+                    var finishTime = ParseTimeSpan(e.Item2);
+                    System.Console.WriteLine($"Finished at: {finishTime}");
+                    break;
             }
         }
 

@@ -14,15 +14,15 @@ namespace Bockstation.EggRace.Core.Mqtt
 {
     public class Connector
     {
-        private const string Topic = "/home/data";
-
         private readonly IMqttClient _client;
-        private readonly IMqttClientOptions _options;
         private readonly IManagedMqttClient _managedClient;
+        private readonly IMqttClientOptions _options;
+        private readonly string _measurementsTopic;
+        private readonly string _resultsTopic;
 
-        public EventHandler<Tuple<long, long, long, long>> MessageReceived;
+        public EventHandler<Tuple<long, long>> MessageReceived;
 
-        public Connector(string server, int? port = null)
+        public Connector(string server, string measurementsTopic, string resultsTopic, int? port = null)
         {
             var factory = new MQTTnet.MqttFactory();
 
@@ -39,6 +39,9 @@ namespace Bockstation.EggRace.Core.Mqtt
                 .WithClientId(nameof(Connector))
                 .WithTcpServer(server, port)
                 .Build();
+
+            _measurementsTopic = measurementsTopic;
+            _resultsTopic = resultsTopic;
         }
 
         public async Task ConnectAsync(CancellationToken cancellationToken = default)
@@ -47,8 +50,8 @@ namespace Bockstation.EggRace.Core.Mqtt
             var authenticateResult = await _client.ConnectAsync(_options, cancellationToken);
             Console.WriteLine($"Authenticate Result: {authenticateResult.ResultCode} | Reason: {authenticateResult.ReasonString}");
 
-            Console.WriteLine($"Subscribing to topic: {Topic}");
-            var subscribeResult = await _client.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(Topic).Build());
+            Console.WriteLine($"Subscribing to topic: {_measurementsTopic}");
+            var subscribeResult = await _client.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(_measurementsTopic).Build());
             Console.WriteLine($"Subscribe Result: {string.Join(" | ", subscribeResult.Items.Select(i => i.ResultCode.ToString()))}");
 
             _client.UseApplicationMessageReceivedHandler(e =>
@@ -71,8 +74,8 @@ namespace Bockstation.EggRace.Core.Mqtt
                     Console.WriteLine($"+ Retain = {e.ApplicationMessage.Retain}");
                     Console.WriteLine();
 
-                    var timestamps = JsonSerializer.Deserialize<long[]>(payload);
-                    MessageReceived?.Invoke(this, new Tuple<long, long, long, long>(timestamps[0], timestamps[1], timestamps[2], timestamps[3]));
+                    var data = JsonSerializer.Deserialize<long[]>(payload);
+                    MessageReceived?.Invoke(this, new Tuple<long, long>(data[0], data[1]));
                 }
             });
         }
@@ -85,13 +88,20 @@ namespace Bockstation.EggRace.Core.Mqtt
                 ClientOptions = _options
             });
 
-            Console.WriteLine($"Subscribing to topic: {Topic}");
-            await _managedClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(Topic).Build());
+            Console.WriteLine($"Subscribing to topic: {_measurementsTopic}");
+            await _managedClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(_measurementsTopic).Build());
+        }
+
+        public async Task PublishResultsAsync(object payload)
+        {
+            Console.WriteLine($"Publishing message: {_resultsTopic} | {payload}");
+
+            await _client.PublishAsync(_resultsTopic, payload.ToString());
         }
 
         private void ConnectedHandler(MqttClientConnectedEventArgs obj)
         {
-            Console.WriteLine($"CONNECTED: Result={obj.AuthenticateResult.ResultCode} | Reason={obj.AuthenticateResult.ReasonString}");
+            Console.WriteLine($"CONNECTED: Result={obj.ConnectResult.ResultCode} | Reason={obj.ConnectResult.ReasonString}");
         }
 
         private void ApplicationMessageProcessedHandler(ApplicationMessageProcessedEventArgs obj)

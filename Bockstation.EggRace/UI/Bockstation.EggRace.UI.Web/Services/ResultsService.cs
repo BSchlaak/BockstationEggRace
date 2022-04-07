@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,14 +16,17 @@ namespace Bockstation.EggRace.UI.Web.Services
     {
         #region Constants
         public const string MqttServerKey = "MqttServer";
+        public const string MqttMeasurementsTopicKey = "MqttMeasurementsTopic";
+        public const string MqttResultsTopicKey = "MqttResultsTopic";
         public const string SimulateKey = "Simulate";
         #endregion Constants
 
         #region Private fields
+        private static Core.Mqtt.Connector _mqttConnector;
+
         private readonly IConfiguration _configuration;
         private readonly IDataRepository<Team, Result> _dataRepository;
         private readonly IHubContext<ResultsHub, IResultsHub<Result>> _resultsHub;
-        private readonly Core.Mqtt.Connector _mqttConnector;
         private Result _currentResult;
         #endregion Private fields
 
@@ -34,7 +38,10 @@ namespace Bockstation.EggRace.UI.Web.Services
             _resultsHub = resultsHub;
 
             var mqttServer = _configuration.GetSection(MqttServerKey).Value;
-            _mqttConnector = new Core.Mqtt.Connector(mqttServer);
+            var mqttMeasurementsTopic = _configuration.GetSection(MqttMeasurementsTopicKey).Value;
+            var mqttResultsTopic = _configuration.GetSection(MqttResultsTopicKey).Value;
+
+            _mqttConnector ??= new Core.Mqtt.Connector(mqttServer, mqttMeasurementsTopic, mqttResultsTopic);
             _mqttConnector.MessageReceived += MqttConnector_MessageReceived;
         }
         #endregion Constructors
@@ -43,6 +50,11 @@ namespace Bockstation.EggRace.UI.Web.Services
         #region Public
         public void Start(Result result)
         {
+            if (result.SplitTime1.HasValue || result.SplitTime2.HasValue || result.TotalTime.HasValue)
+            {
+                _dataRepository.DeleteResult(result);
+            }
+
             _currentResult = result;
             _dataRepository.AddResult(_currentResult);
 
@@ -125,57 +137,60 @@ namespace Bockstation.EggRace.UI.Web.Services
         #endregion Methods
 
         #region Event handlers
-        private void MqttConnector_MessageReceived(object sender, Tuple<long, long, long, long> e)
+        private async void MqttConnector_MessageReceived(object sender, Tuple<long, long> e)
         {
             Console.WriteLine($"Message received: {e}");
 
             if (_currentResult != null)
             {
-                if (e.Item1 > 0)
+                switch (e.Item1)
                 {
-                    _currentResult.StartTime = ParseTimeSpan(e.Item1);
-
-                    if (e.Item2 == 0)
-                    {
-                        Console.WriteLine($"Started at: {_currentResult.StartTime}");
-                    }
-                    else
-                    {
-                        var splitTime1 = ParseTimeSpan(e.Item2);
-                        _currentResult.SplitTime1 = splitTime1 - _currentResult.StartTime;
-
-                        if (e.Item3 == 0)
+                    case 0:
+                        if (_currentResult.StartTime == TimeSpan.Zero)
                         {
-                            Console.WriteLine(
-                                $"First intermediate time at: {splitTime1} (after {_currentResult.SplitTime1})");
+                            _currentResult.StartTime = ParseTimeSpan(e.Item2);
                         }
-                        else
+                        break;
+
+                    case 1:
+                        if (_currentResult.StartTime != TimeSpan.Zero &&
+                            !_currentResult.SplitTime1.HasValue)
                         {
-                            var splitTime2 = ParseTimeSpan(e.Item3);
+                            var splitTime1 = ParseTimeSpan(e.Item2);
+                            _currentResult.SplitTime1 = splitTime1 - _currentResult.StartTime;
+                        }
+                        break;
+
+                    case 2:
+                        if (_currentResult.StartTime != TimeSpan.Zero &&
+                            _currentResult.SplitTime1.HasValue &&
+                            !_currentResult.SplitTime2.HasValue)
+                        {
+                            var splitTime2 = ParseTimeSpan(e.Item2);
                             _currentResult.SplitTime2 = splitTime2 - _currentResult.StartTime;
-
-                            if (e.Item4 == 0)
-                            {
-                                Console.WriteLine(
-                                    $"Second intermediate time at: {splitTime2} (after {_currentResult.SplitTime2})");
-                            }
-                            else
-                            {
-                                var totalTime = ParseTimeSpan(e.Item4);
-                                _currentResult.TotalTime = totalTime - _currentResult.StartTime;
-
-                                Console.WriteLine($"Finished at: {totalTime} (after {_currentResult.TotalTime})");
-                            }
                         }
+                        break;
 
-                        _dataRepository.UpdateResult(_currentResult);
-                        _resultsHub.Clients.All.ReceiveResult(_currentResult);
-
-                        if (_currentResult.TotalTime.HasValue)
+                    case 3:
+                        if (_currentResult.StartTime != TimeSpan.Zero &&
+                            _currentResult.SplitTime1.HasValue &&
+                            _currentResult.SplitTime2.HasValue &&
+                            !_currentResult.TotalTime.HasValue)
                         {
-                            _currentResult = null;
+                            var totalTime = ParseTimeSpan(e.Item2);
+                            _currentResult.TotalTime = totalTime - _currentResult.StartTime;
                         }
-                    }
+                        break;
+                }
+
+                _dataRepository.UpdateResult(_currentResult);
+                await _resultsHub.Clients.All.ReceiveResult(_currentResult);
+                var payload = JsonSerializer.Serialize(_currentResult);
+                await _mqttConnector.PublishResultsAsync(payload);
+
+                if (_currentResult.TotalTime.HasValue)
+                {
+                    _currentResult = null;
                 }
             }
         }

@@ -15,6 +15,8 @@ namespace Bockstation.EggRace.Common.Interfaces
 
         bool AddResult(TResult result);
 
+        bool DeleteResult(TResult result);
+
         bool UpdateResult(TResult result);
 
         bool UploadTeamsFile(Stream content);

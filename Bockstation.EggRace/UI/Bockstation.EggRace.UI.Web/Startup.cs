@@ -5,6 +5,7 @@ using Bockstation.EggRace.UI.Web.Hubs;
 using Bockstation.EggRace.UI.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,12 @@ namespace Bockstation.EggRace.UI.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            //using (var db = new EggRaceContext())
+            //{
+            //    db.Database.EnsureCreated();
+            //    db.Database.Migrate();
+            //}
         }
 
         public IConfiguration Configuration { get; }
@@ -23,6 +30,8 @@ namespace Bockstation.EggRace.UI.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlite()
+                .AddDbContext<EggRaceContext>();
             services.AddSingleton<IDataRepository<Team, Result>, DataRepository>();
             services.AddSignalR();
             services.AddHostedService<ResultsService>();

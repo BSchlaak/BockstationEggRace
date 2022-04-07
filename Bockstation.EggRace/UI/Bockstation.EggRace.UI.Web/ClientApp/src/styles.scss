@@ -23,8 +23,9 @@ body {
   background-color: yellow;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   
-  > .container-fluid {
-    padding-top: 80px !important;
+  div.container-fluid {
+    // padding-top: 80px !important;
+    margin-top: 80px;
   }
 }
 

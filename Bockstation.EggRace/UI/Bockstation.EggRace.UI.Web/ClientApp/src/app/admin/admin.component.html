@@ -63,6 +63,11 @@
                             (click)="startRace(result)">
                             <fa-icon [icon]="faPlay" title="Rennen starten"></fa-icon>
                           </button>
+                          <button mat-mini-fab color="warn"
+                            [disabled]="result.playerName === ''"
+                            (click)="resetRace(result)">
+                            <fa-icon [icon]="faRedoAlt" title="Rennen neu starten"></fa-icon>
+                          </button>
                         </td>
                         <td>
                           <span *ngIf="!!result.splitTime1">{{ result.splitTime1 | date:'s.SSS' }}</span>

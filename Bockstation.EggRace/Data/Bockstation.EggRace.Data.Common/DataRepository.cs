@@ -117,6 +117,23 @@ namespace Bockstation.EggRace.Data.Common
             return false;
         }
 
+        public bool DeleteResult(Result result)
+        {
+            var results = GetResults().ToList();
+
+            var resultToDelete = results
+                .SingleOrDefault(r => r.TeamName.Equals(result.TeamName) && r.PlayerName.Equals(result.PlayerName));
+            if (resultToDelete != null)
+            {
+                if (results.Remove(resultToDelete))
+                {
+                    return WriteResults(results);
+                }
+            }
+
+            return false;
+        }
+
         public bool UpdateResult(Result result)
         {
             var results = GetResults();
