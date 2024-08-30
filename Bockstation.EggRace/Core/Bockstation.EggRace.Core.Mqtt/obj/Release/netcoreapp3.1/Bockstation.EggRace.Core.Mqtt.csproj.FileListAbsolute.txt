@@ -1,9 +1,0 @@
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\bin\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.deps.json
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\bin\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.dll
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\bin\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.pdb
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.csprojAssemblyReference.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.AssemblyInfoInputs.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.AssemblyInfo.cs
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.csproj.CoreCompileInputs.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.dll
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Core\Bockstation.EggRace.Core.Mqtt\obj\Release\netcoreapp3.1\Bockstation.EggRace.Core.Mqtt.pdb

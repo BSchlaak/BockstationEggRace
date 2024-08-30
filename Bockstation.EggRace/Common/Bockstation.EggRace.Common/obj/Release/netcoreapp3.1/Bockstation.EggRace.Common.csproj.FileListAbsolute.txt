@@ -1,9 +1,0 @@
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\bin\Release\netcoreapp3.1\Bockstation.EggRace.Common.deps.json
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\bin\Release\netcoreapp3.1\Bockstation.EggRace.Common.dll
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\bin\Release\netcoreapp3.1\Bockstation.EggRace.Common.pdb
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.csprojAssemblyReference.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.AssemblyInfoInputs.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.AssemblyInfo.cs
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.csproj.CoreCompileInputs.cache
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.dll
-C:\Source\Repos\GitHub\BSchlaak\BockstationEggRace\Bockstation.EggRace\Common\Bockstation.EggRace.Common\obj\Release\netcoreapp3.1\Bockstation.EggRace.Common.pdb
